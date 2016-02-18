@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Quelle:
+http://developer.android.com/training/improving-layouts/reusing-layouts.html
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/travelVonNach"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/reiseVon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/connection_startplace"
+        android:layout_toLeftOf="@+id/btnChange"
+        android:layout_toStartOf="@+id/btnChange" />
+
+    <EditText
+        android:id="@+id/reiseNach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/reiseVon"
+        android:hint="@string/connection_targetplace"
+        android:layout_toLeftOf="@+id/btnChange"
+        android:layout_toStartOf="@+id/btnChange" />
+
+    <ImageButton
+        android:id="@+id/btnChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_change"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="false"
+        android:contentDescription="@string/connection_hint_changeVonNach" />
+</RelativeLayout>
