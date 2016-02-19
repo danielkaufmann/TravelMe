@@ -59,7 +59,7 @@ public class ConnectionItemAdapter extends BaseAdapter {
             convertView = null;
         }
         else{
-            // // TODO: 19.02.2016 füge Reise-Eigenschaften hinzu (Verspätung, Auslastung des Zuges, ...)
+            // // TODO: 19.02.2016 füge Reise-Eigenschaften hinzu (Verspätung, Name des Zuges, Auslastung des Zuges, ...)
             TextView txtAb = (TextView) convertView.findViewById(R.id.textAb);
             TextView txtAn = (TextView) convertView.findViewById(R.id.textAn);
             TextView txtDauer = (TextView) convertView.findViewById(R.id.textDauer);
