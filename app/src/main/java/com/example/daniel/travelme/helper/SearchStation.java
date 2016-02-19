@@ -2,29 +2,44 @@ package com.example.daniel.travelme.helper;
 
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import ch.schoeb.opendatatransport.IOpenTransportRepository;
 import ch.schoeb.opendatatransport.OpenTransportRepositoryFactory;
-import ch.schoeb.opendatatransport.model.ConnectionList;
+import ch.schoeb.opendatatransport.model.Station;
+import ch.schoeb.opendatatransport.model.StationList;
 
 /**
  * Created by Marco on 19.02.2016.
  */
-public class SearchHandler {
+public class SearchStation {
 
-    private SearchItem item;
+    private String stationToFind;
+    private ArrayList<Station> similarStations;
     private Boolean isWorkerFinished = false;
 
-    public SearchHandler(String from, String to) {
-        item = new SearchItem(from, to) {
-        };
+    public SearchStation() {
+        similarStations = new ArrayList<>();
     }
 
-    public void startSearch(SearchCallback callback) {
+    public void startSearch(String stationToFind, SearchCallback callback) {
+        this.stationToFind = stationToFind;
         new Worker(callback).execute();
     }
 
-    public SearchItem getSettings() {
-        return item;
+    public ArrayList<Station> getStations() {
+        return similarStations;
+    }
+
+    public ArrayList<String> getStationNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Station item :
+                similarStations) {
+            names.add(item.getName());
+        }
+        Collections.sort(names);
+        return names;
     }
 
     public Boolean isSearchFinished() {
@@ -41,6 +56,7 @@ public class SearchHandler {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            similarStations = new ArrayList<>();
             if (callback != null) {
                 callback.onStart();
             }
@@ -58,13 +74,8 @@ public class SearchHandler {
         protected Void doInBackground(Void... arg0) {
             try {
                 IOpenTransportRepository repo = OpenTransportRepositoryFactory.CreateOnlineOpenTransportRepository();
-                ConnectionList clist = repo.searchConnections(item.from, item.to);
-                item.connections.addAll(clist.getConnections());
-                if (item.connections.size() > 0) {
-                    // update Namen, nach denen die Verbindung gesucht wurde
-                    item.from = item.connections.get(0).getFrom().getStation().getName();
-                    item.to = item.connections.get(0).getTo().getStation().getName();
-                }
+                StationList sList = repo.findStations(stationToFind);
+                similarStations.addAll(sList.getStations());
                 publishProgress(true);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -7,36 +7,36 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/reiseVon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="@string/connection_startplace"
         android:layout_toLeftOf="@+id/btnChange"
-        android:layout_toStartOf="@+id/btnChange" />
+        android:layout_toStartOf="@+id/btnChange"
+        android:hint="@string/connection_startplace" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/reiseNach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/reiseVon"
-        android:hint="@string/connection_targetplace"
         android:layout_toLeftOf="@+id/btnChange"
-        android:layout_toStartOf="@+id/btnChange" />
+        android:layout_toStartOf="@+id/btnChange"
+        android:hint="@string/connection_targetplace" />
 
     <ImageButton
         android:id="@+id/btnChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_change"
+        android:layout_alignBottom="@+id/reiseNach"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:clickable="false"
         android:contentDescription="@string/connection_hint_changeVonNach"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/reiseNach" />
+        android:src="@drawable/icon_change" />
 </RelativeLayout>
