@@ -13,6 +13,7 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/connection_time_startplace"
         android:id="@+id/lblAb"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -23,8 +24,8 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
         android:text="HH:mm"
         android:id="@+id/textAb"
         android:layout_below="@+id/lblAb"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/lblAb"
+        android:layout_alignStart="@+id/lblAb" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,9 +43,9 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="HH:mm"
         android:id="@+id/textAn"
-        android:layout_alignTop="@+id/textAb"
-        android:layout_toRightOf="@+id/textAb"
-        android:layout_toEndOf="@+id/textAb" />
+        android:layout_below="@+id/lblAb"
+        android:layout_alignLeft="@+id/lblAn"
+        android:layout_alignStart="@+id/lblAn" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +63,27 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="# x"
         android:id="@+id/textNofUmsteigen"
-        android:layout_below="@+id/lblNofUmsteigen"
-        android:layout_toRightOf="@+id/textAn"
-        android:layout_toEndOf="@+id/textAn" />
+        android:layout_below="@+id/lblAb"
+        android:layout_alignLeft="@+id/lblNofUmsteigen"
+        android:layout_alignStart="@+id/lblNofUmsteigen" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/connection_dauer"
+        android:id="@+id/lblDauer"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/lblNofUmsteigen"
+        android:layout_toEndOf="@+id/lblNofUmsteigen" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="HH:mm"
+        android:id="@+id/textDauer"
+        android:layout_below="@+id/lblAb"
+        android:layout_alignLeft="@+id/lblDauer"
+        android:layout_alignStart="@+id/lblDauer" />
 </RelativeLayout>

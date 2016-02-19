@@ -4,9 +4,11 @@
     <string name="connection_time_targetplace">An</string>
     <string name="about">About</string>
     <string name="connection_umsteigen">Umsteigen</string>
+    <string name="connection_dauer">Dauer</string>
     <string name="connection_startplace">von</string>
     <string name="connection_targetplace">nach</string>
     <string name="connection_hint_changeVonNach">Wechsle Start- und Zielort</string>
     <string name="connection_hint_addFavorite">zu Favoriten hinzufügen?</string>
+    <string name="connection_result_noConnections">Keine Verbindungen gefunden</string>
     <string name="main_hint_search">Suche Verbindungen</string>
 </resources>

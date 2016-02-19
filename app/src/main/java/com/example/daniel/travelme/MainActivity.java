@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ConnectionActivity.class);
                 intent.putExtra("reiseVon", reiseVon.getText().toString());
                 intent.putExtra("reiseNach", reiseNach.getText().toString());
+
                 startActivity(intent);
             }
         });

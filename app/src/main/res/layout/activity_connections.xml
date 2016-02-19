@@ -70,21 +70,42 @@
 
     </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ConnectionActivity"
-        android:layout_below="@+id/travelSettings"
-        android:id="@+id/travelResults">
 
-        <!-- TODO nachfolgende listitems anpassen wie in Übung "adapterView" ( Skript Teil 1, Folie 79 ) -->
-        <include layout="@layout/layout_connection_listitem"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/travelResults"
+        tools:context=".ConnectionActivity"
+        android:layout_below="@+id/travelSettings">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/connection1"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/connection_result_noConnections"
+            android:id="@+id/lblResults"
+            android:layout_below="@+id/lblAb"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/lvResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lblResults" />
+
+        <RelativeLayout
+            android:id="@+id/loadingPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="visible"
+                style="?android:attr/progressBarStyleLarge"
+                />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
