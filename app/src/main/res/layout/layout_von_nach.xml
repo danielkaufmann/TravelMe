@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Quelle:
+<?xml version="1.0" encoding="utf-8"?><!-- Quelle:
 http://developer.android.com/training/improving-layouts/reusing-layouts.html
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,8 +13,18 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/btnChange"
-        android:layout_toStartOf="@+id/btnChange"
-        android:hint="@string/connection_startplace" />
+        android:hint="@string/connection_startplace"></AutoCompleteTextView>
+
+    <ProgressBar
+        android:id="@+id/reiseVonProgressBar"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/reiseVon"
+        android:layout_alignTop="@+id/reiseVon"
+        android:layout_toLeftOf="@+id/btnChange"
+        android:paddingRight="5dp"
+        android:visibility="gone" />
 
     <AutoCompleteTextView
         android:id="@+id/reiseNach"
@@ -27,6 +36,17 @@ http://developer.android.com/training/improving-layouts/reusing-layouts.html
         android:layout_toLeftOf="@+id/btnChange"
         android:layout_toStartOf="@+id/btnChange"
         android:hint="@string/connection_targetplace" />
+
+    <ProgressBar
+        android:id="@+id/reiseNachProgressBar"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/reiseNach"
+        android:layout_alignTop="@+id/reiseNach"
+        android:layout_toLeftOf="@+id/btnChange"
+        android:paddingRight="5dp"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/btnChange"

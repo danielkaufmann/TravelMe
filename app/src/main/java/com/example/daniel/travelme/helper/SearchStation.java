@@ -38,6 +38,7 @@ public class SearchStation {
                 similarStations) {
             names.add(item.getName());
         }
+
         Collections.sort(names);
         return names;
     }
@@ -56,7 +57,7 @@ public class SearchStation {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            similarStations = new ArrayList<>();
+            isWorkerFinished = false;
             if (callback != null) {
                 callback.onStart();
             }
@@ -65,6 +66,7 @@ public class SearchStation {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            isWorkerFinished = true;
             if (callback != null) {
                 callback.onFinished();
             }
@@ -75,6 +77,7 @@ public class SearchStation {
             try {
                 IOpenTransportRepository repo = OpenTransportRepositoryFactory.CreateOnlineOpenTransportRepository();
                 StationList sList = repo.findStations(stationToFind);
+                similarStations.clear();
                 similarStations.addAll(sList.getStations());
                 publishProgress(true);
             } catch (Exception e) {
@@ -86,7 +89,6 @@ public class SearchStation {
         @Override
         protected void onProgressUpdate(Boolean... values) {
             super.onProgressUpdate(values);
-            isWorkerFinished = values[0];
         }
     }
 }

@@ -41,6 +41,7 @@ public class SearchHandler {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            isWorkerFinished = false;
             if (callback != null) {
                 callback.onStart();
             }
@@ -49,6 +50,7 @@ public class SearchHandler {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            isWorkerFinished = true;
             if (callback != null) {
                 callback.onFinished();
             }
@@ -75,7 +77,6 @@ public class SearchHandler {
         @Override
         protected void onProgressUpdate(Boolean... values) {
             super.onProgressUpdate(values);
-            isWorkerFinished = values[0];
         }
     }
 }

@@ -40,38 +40,49 @@ public class MainActivity extends AppCompatActivity {
         buttonSearch();
 
         // Text inputs autocomplete
-        textInput(R.id.reiseVon);
-        textInput(R.id.reiseNach);
+        textInput(R.id.reiseVon, R.id.reiseVonProgressBar);
+        textInput(R.id.reiseNach, R.id.reiseNachProgressBar);
     }
 
-    private void textInput(int viewId) {
+    private void textInput(int viewId, final int progressBarId) {
         final Context context = this;
         final AutoCompleteTextView actv = (AutoCompleteTextView) findViewById(viewId);
+
         actv.addTextChangedListener(new TextWatcher() {
+            int idProgressbar = progressBarId;
+            String lastSearch = "";
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (lastSearch.equals(s.toString())) {
+                    return;
+                }
+                lastSearch = s.toString();
+
                 stationFinder.startSearch(s.toString(), new SearchCallback() {
                     @Override
                     public void onFinished() {
                         autoCompleteSuggestions.clear();
                         autoCompleteSuggestions.addAll(stationFinder.getStationNames());
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_activated_1, autoCompleteSuggestions);
-                        adapter.notifyDataSetChanged();
                         actv.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        findViewById(idProgressbar).setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onStart() {
+                        findViewById(idProgressbar).setVisibility(View.VISIBLE);
                     }
                 });
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
             }
         });
     }
