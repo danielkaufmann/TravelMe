@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.daniel.travelme.helper.ConnectionItemAdapter;
+import com.example.daniel.travelme.helper.FavoriteItems;
 import com.example.daniel.travelme.helper.SearchCallback;
 import com.example.daniel.travelme.helper.SearchHandler;
 
@@ -63,6 +64,9 @@ public class ConnectionActivity extends AppCompatActivity{
         reiseVon.setClickable(false);
         reiseNach.setFocusable(false);
         reiseNach.setClickable(false);
+
+        boolean isFavorite = new FavoriteItems().isFavorite(reiseVon.getText().toString(), reiseNach.getText().toString());
+        buttonFavoriteIcon(isFavorite);
     }
 
     private void updateResults() {
@@ -74,6 +78,7 @@ public class ConnectionActivity extends AppCompatActivity{
                 if(searchSettings.getSettings().connections.size() <= 0)
                 {
                     findViewById(R.id.lblResults).setVisibility(View.VISIBLE);
+                    findViewById(R.id.btnFavorite).setVisibility(View.INVISIBLE);
                 }
                 else
                 {
@@ -84,6 +89,7 @@ public class ConnectionActivity extends AppCompatActivity{
                     listView.setVisibility(View.VISIBLE);
                     findViewById(R.id.btnPrevious).setVisibility(View.VISIBLE);
                     findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
+                    findViewById(R.id.btnFavorite).setVisibility(View.VISIBLE);
                 }
             }
 
@@ -93,12 +99,21 @@ public class ConnectionActivity extends AppCompatActivity{
                 findViewById(R.id.lblResults).setVisibility(View.GONE);
                 findViewById(R.id.btnPrevious).setVisibility(View.GONE);
                 findViewById(R.id.btnNext).setVisibility(View.GONE);
+                findViewById(R.id.btnFavorite).setVisibility(View.INVISIBLE);
                 findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
             }
         });
 
 
+    }
+
+    private void buttonFavoriteIcon(boolean isFavorite) {
+        final ImageButton button = (ImageButton) findViewById(R.id.btnFavorite);
+        if (isFavorite) {
+            button.setImageResource(android.R.drawable.star_big_on);
+        } else
+            button.setImageResource(android.R.drawable.star_big_off);
     }
 
     /*
@@ -110,8 +125,19 @@ public class ConnectionActivity extends AppCompatActivity{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // // TODO: 18.02.2016 implementiere Logik für Favoriten
-                button.setImageResource(android.R.drawable.star_big_on);
+                EditText reiseVon = (EditText) findViewById(R.id.reiseVon);
+                EditText reiseNach = (EditText) findViewById(R.id.reiseNach);
+
+                String from = reiseVon.getText().toString();
+                String to = reiseNach.getText().toString();
+                FavoriteItems fav = new FavoriteItems();
+                boolean isFavorite = fav.isFavorite(from, to);
+                buttonFavoriteIcon(!isFavorite);
+                if (isFavorite) {
+                    fav.delete(from, to);
+                } else {
+                    fav.add(from, to);
+                }
             }
         });
     }

@@ -11,4 +11,7 @@
     <string name="connection_hint_addFavorite">zu Favoriten hinzufügen?</string>
     <string name="connection_result_noConnections">Keine Verbindungen gefunden</string>
     <string name="main_hint_search">Suche Verbindungen</string>
+    <string name="main_hint_delFavorite">Lösche diesen Favoriten</string>
+    <string name="main_favorites">Favoriten</string>
+    <string name="main_noFavorites">Keine Favoriten gespeichert</string>
 </resources>

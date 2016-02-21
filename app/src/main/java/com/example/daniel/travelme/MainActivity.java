@@ -10,12 +10,19 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.daniel.travelme.helper.FavoriteItemAdapter;
+import com.example.daniel.travelme.helper.FavoriteItems;
 import com.example.daniel.travelme.helper.SearchCallback;
+import com.example.daniel.travelme.helper.SearchItem;
 import com.example.daniel.travelme.helper.SearchStation;
 
 import java.util.ArrayList;
@@ -42,6 +49,49 @@ public class MainActivity extends AppCompatActivity {
         // Text inputs autocomplete
         textInput(R.id.reiseVon, R.id.reiseVonProgressBar);
         textInput(R.id.reiseNach, R.id.reiseNachProgressBar);
+
+        // favorites
+        showFavorites();
+    }
+
+    private void showFavorites() {
+        FavoriteItems.sharedPreferences = this.getSharedPreferences(FavoriteItems.getFilename(), Context.MODE_PRIVATE);
+        final ArrayList<SearchItem> favorites = new FavoriteItems().getFavorites();
+
+        if (favorites.size() <= 0) {
+            findViewById(R.id.listFavorites).setVisibility(View.GONE);
+            findViewById(R.id.lblNoFavorites).setVisibility(View.VISIBLE);
+            return;
+        }
+
+
+        ListView listView = (ListView) findViewById(R.id.listFavorites);
+        FavoriteItemAdapter adapter = new FavoriteItemAdapter(this, favorites);
+        listView.setAdapter(adapter);
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                ListView listView = (ListView) findViewById(R.id.listFavorites);
+                SearchItem item = favorites.get(position);
+                StartSearch(item.from, item.to);
+            }
+        });
+
+        findViewById(R.id.lblNoFavorites).setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
+    }
+
+    public void onCLickItemDelete(View v) {
+        RelativeLayout listRow = (RelativeLayout) v.getParent();
+
+        TextView txtVon = (TextView) listRow.findViewById(R.id.txtVon);
+        TextView txtNach = (TextView) listRow.findViewById(R.id.txtNach);
+
+        FavoriteItems fav = new FavoriteItems();
+        fav.delete(txtVon.getText().toString(), txtNach.getText().toString());
+        showFavorites();
     }
 
     private void textInput(int viewId, final int progressBarId) {
@@ -111,13 +161,17 @@ public class MainActivity extends AppCompatActivity {
                 EditText reiseVon = (EditText) findViewById(R.id.reiseVon);
                 EditText reiseNach = (EditText) findViewById(R.id.reiseNach);
 
-                Intent intent = new Intent(MainActivity.this, ConnectionActivity.class);
-                intent.putExtra("reiseVon", reiseVon.getText().toString());
-                intent.putExtra("reiseNach", reiseNach.getText().toString());
-
-                startActivity(intent);
+                StartSearch(reiseVon.getText().toString(), reiseNach.getText().toString());
             }
         });
+    }
+
+    private void StartSearch(String reiseVon, String reiseNach) {
+        Intent intent = new Intent(MainActivity.this, ConnectionActivity.class);
+        intent.putExtra("reiseVon", reiseVon);
+        intent.putExtra("reiseNach", reiseNach);
+
+        startActivity(intent);
     }
 
 
