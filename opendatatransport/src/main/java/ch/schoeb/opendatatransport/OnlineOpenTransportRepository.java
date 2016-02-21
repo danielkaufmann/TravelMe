@@ -64,7 +64,7 @@ public class OnlineOpenTransportRepository implements IOpenTransportRepository {
     private String buildSearchConnectionUrl(String from, String to, String via, String date, String time, Boolean isArrivalTime, Integer page) {
         String url = null;
         try {
-            url = "http://transport.opendata.ch/v1/connections?from=" + URLEncoder.encode(from, "UTF-8") + "&to=" + URLEncoder.encode(to, "UTF-8") + "&page=" + page;
+            url = "http://transport.opendata.ch/v1/connections?from=" + URLEncoder.encode(from, "UTF-8") + "&to=" + URLEncoder.encode(to, "UTF-8") + "&page=" + page + "&limit=4";
             if (via != null && via != "") {
                 url += "&via[]=" + via;
             }
