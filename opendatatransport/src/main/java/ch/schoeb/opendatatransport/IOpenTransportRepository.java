@@ -9,6 +9,6 @@ public interface IOpenTransportRepository {
 
     ConnectionList searchConnections(String from, String to);
 
-    ConnectionList searchConnections(String from, String to, String via, String date, String time, Boolean isArrivalTime);
+    ConnectionList searchConnections(String from, String to, String via, String date, String time, Boolean isArrivalTime, Integer page);
 
 }

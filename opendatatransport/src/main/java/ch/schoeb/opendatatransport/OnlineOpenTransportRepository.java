@@ -37,12 +37,12 @@ public class OnlineOpenTransportRepository implements IOpenTransportRepository {
 
     @Override
     public ConnectionList searchConnections(String from, String to) {
-        return searchConnections(from, to, null, null, null, false);
+        return searchConnections(from, to, null, null, null, false, 0);
     }
 
     @Override
-    public ConnectionList searchConnections(String from, String to, String via, String date, String time, Boolean isArrivalTime) {
-        String url = buildSearchConnectionUrl(from, to, via, date, time, isArrivalTime);
+    public ConnectionList searchConnections(String from, String to, String via, String date, String time, Boolean isArrivalTime, Integer pageNbr) {
+        String url = buildSearchConnectionUrl(from, to, via, date, time, isArrivalTime, pageNbr);
         String json = GetJson(url);
 
         Gson gson = new Gson();
@@ -61,11 +61,10 @@ public class OnlineOpenTransportRepository implements IOpenTransportRepository {
         return json;
     }
 
-    private String buildSearchConnectionUrl(String from, String to, String via, String date, String time, Boolean isArrivalTime) {
+    private String buildSearchConnectionUrl(String from, String to, String via, String date, String time, Boolean isArrivalTime, Integer page) {
         String url = null;
         try {
-            url = "http://transport.opendata.ch/v1/connections?from=" + URLEncoder.encode(from, "UTF-8") + "&to=" + URLEncoder.encode(to, "UTF-8");
-
+            url = "http://transport.opendata.ch/v1/connections?from=" + URLEncoder.encode(from, "UTF-8") + "&to=" + URLEncoder.encode(to, "UTF-8") + "&page=" + page;
             if (via != null && via != "") {
                 url += "&via[]=" + via;
             }
@@ -79,8 +78,9 @@ public class OnlineOpenTransportRepository implements IOpenTransportRepository {
             }
 
             if (isArrivalTime) {
-                url += "&url=1";
+                url += "&isArrivalTime=1";
             }
+
 
         } catch (UnsupportedEncodingException e) {
 

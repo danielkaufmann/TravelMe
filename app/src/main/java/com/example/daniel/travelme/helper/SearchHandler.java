@@ -60,7 +60,8 @@ public class SearchHandler {
         protected Void doInBackground(Void... arg0) {
             try {
                 IOpenTransportRepository repo = OpenTransportRepositoryFactory.CreateOnlineOpenTransportRepository();
-                ConnectionList clist = repo.searchConnections(item.from, item.to);
+                ConnectionList clist = repo.searchConnections(item.from, item.to, null, item.getDate(), item.getTime(), item.isArrival, item.actualPage);
+                item.connections.clear();
                 item.connections.addAll(clist.getConnections());
                 if (item.connections.size() > 0) {
                     // update Namen, nach denen die Verbindung gesucht wurde

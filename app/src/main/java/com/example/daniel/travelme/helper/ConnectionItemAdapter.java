@@ -14,7 +14,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 import ch.schoeb.opendatatransport.model.Connection;
 
@@ -82,9 +81,6 @@ public class ConnectionItemAdapter extends BaseAdapter {
     private String timestampToString(String timeStamp) throws ParseException {
         DateFormat outputFormat = new SimpleDateFormat("HH:mm");
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sszzz");
-
-        inputFormat.setTimeZone(TimeZone.getTimeZone("GMT+1"));
-        outputFormat.setTimeZone(TimeZone.getTimeZone("GMT+1"));
 
         Date date = inputFormat.parse(timeStamp);
         return outputFormat.format(date);

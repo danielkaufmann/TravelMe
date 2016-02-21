@@ -45,6 +45,8 @@ public class ConnectionActivity extends AppCompatActivity{
         buttonDate();
         buttonTime();
         buttonFavorite();
+        buttonSearchNext();
+        buttonSearchPrevious();
 
         // Prepare view
         setTravelPlaces();
@@ -80,6 +82,8 @@ public class ConnectionActivity extends AppCompatActivity{
                     ConnectionItemAdapter adapter = new ConnectionItemAdapter(tmp, searchSettings.getSettings().connections);
                     listView.setAdapter(adapter);
                     listView.setVisibility(View.VISIBLE);
+                    findViewById(R.id.btnPrevious).setVisibility(View.VISIBLE);
+                    findViewById(R.id.btnNext).setVisibility(View.VISIBLE);
                 }
             }
 
@@ -87,6 +91,8 @@ public class ConnectionActivity extends AppCompatActivity{
             public void onStart() {
                 findViewById(R.id.lvResults).setVisibility(View.GONE);
                 findViewById(R.id.lblResults).setVisibility(View.GONE);
+                findViewById(R.id.btnPrevious).setVisibility(View.GONE);
+                findViewById(R.id.btnNext).setVisibility(View.GONE);
                 findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
             }
@@ -124,6 +130,30 @@ public class ConnectionActivity extends AppCompatActivity{
                 reiseVon.setText(textNach);
 
                 searchSettings = new SearchHandler(textNach, textVon);
+                updateResults();
+            }
+        });
+    }
+
+    private void buttonSearchPrevious() {
+        ImageButton button = (ImageButton) findViewById(R.id.btnPrevious);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchSettings.getSettings().actualPage--;
+                updateResults();
+            }
+        });
+    }
+
+    private void buttonSearchNext() {
+        ImageButton button = (ImageButton) findViewById(R.id.btnNext);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchSettings.getSettings().actualPage++;
                 updateResults();
             }
         });

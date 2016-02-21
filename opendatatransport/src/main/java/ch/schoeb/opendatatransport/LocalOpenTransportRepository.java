@@ -27,11 +27,11 @@ public class LocalOpenTransportRepository implements IOpenTransportRepository {
 
     @Override
     public ConnectionList searchConnections(String from, String to) {
-        return searchConnections(from, to, null, null, null, false);
+        return searchConnections(from, to, null, null, null, false, 0);
     }
 
     @Override
-    public ConnectionList searchConnections(String from, String to, String via, String date, String time, Boolean isArrivalTime) {
+    public ConnectionList searchConnections(String from, String to, String via, String date, String time, Boolean isArrivalTime, Integer page) {
         ArrayList<Connection> connections = new ArrayList<>();
 
         Connection firstDirectConnection = new Connection();
