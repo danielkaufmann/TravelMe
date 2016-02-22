@@ -2,6 +2,8 @@ package com.example.daniel.travelme.helper;
 
 import android.os.AsyncTask;
 
+import java.util.Calendar;
+
 import ch.schoeb.opendatatransport.IOpenTransportRepository;
 import ch.schoeb.opendatatransport.OpenTransportRepositoryFactory;
 import ch.schoeb.opendatatransport.model.ConnectionList;
@@ -17,6 +19,9 @@ public class SearchHandler {
     public SearchHandler(String from, String to) {
         item = new SearchItem(from, to) {
         };
+    }
+    public SearchHandler(String from, String to, Calendar cal) {
+        item = new SearchItem(from, to, cal);
     }
 
     public void startSearch(SearchCallback callback) {

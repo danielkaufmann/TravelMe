@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 import com.example.daniel.travelme.helper.ConnectionItemAdapter;
 import com.example.daniel.travelme.helper.FavoriteItems;
@@ -18,10 +20,12 @@ import com.example.daniel.travelme.helper.SearchCallback;
 import com.example.daniel.travelme.helper.SearchHandler;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+
 public class ConnectionActivity extends AppCompatActivity{
-    private Date tripDateTime = new Date();
+    private Calendar tripDateTime = Calendar.getInstance();
     private boolean isStartTime = true;
     private SearchHandler searchSettings;
 
@@ -187,22 +191,38 @@ public class ConnectionActivity extends AppCompatActivity{
 
     private void buttonDate() {
         Button button = (Button) findViewById(R.id.btnDate);
-
-        String formattedDate = new SimpleDateFormat("dd-MMM").format(tripDateTime).toString();
-        button.setText(formattedDate);
+        DialogFragment newFragment = new DatePickerFrag();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo implementiere Logik um Datum zu wählen. Datum von "tripDateTime" ändern
+                DialogFragment newFragment = new DatePickerFrag();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });
+        System.out.println("before new");
+        System.out.println(tripDateTime.getTime());
+
+        SimpleDateFormat formattedDate = new SimpleDateFormat("MM-DD");
+        formattedDate.setCalendar(tripDateTime);
+        String formattedDateString = formattedDate.format(tripDateTime.getTime()).toString();
+        button.setText(formattedDateString);
+
+        System.out.println("before new");
+        searchSettings = new SearchHandler(searchSettings.getSettings().getFrom(), searchSettings.getSettings().getTo(), tripDateTime);
+        System.out.println("after new");
+
+        updateResults();
     }
+
 
     private void buttonTime() {
         Button button = (Button) findViewById(R.id.btnTime);
 
-        String formattedTime = new SimpleDateFormat("HH:mm").format(tripDateTime).toString();
+        SimpleDateFormat formattedTime = new SimpleDateFormat("hh:mm");
+        formattedTime.setCalendar(tripDateTime);
+        String formattedDateString = formattedTime.toString();
+
         String textPreTime;
         if (isStartTime) {
             textPreTime = getResources().getString(R.string.connection_time_startplace);
@@ -210,13 +230,19 @@ public class ConnectionActivity extends AppCompatActivity{
             textPreTime = getResources().getString(R.string.connection_time_targetplace);
         }
         button.setText(textPreTime + " " + formattedTime);
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo implementiere Logik um Zeit und ab/an zu wählen. Zeit von "tripDateTime" ändern. Und "isStartTime" anpassen für ab/an.
+                DialogFragment newFragment = new TimePickerFrag();
+                newFragment.show(getSupportFragmentManager(), "timePicker");
             }
         });
+        formattedDateString = formattedTime.format(tripDateTime.getTime()).toString();
+
+        button.setText(formattedDateString);
+        System.out.println(formattedDateString);
+        searchSettings = new SearchHandler(searchSettings.getSettings().getFrom(), searchSettings.getSettings().getTo(), tripDateTime);
+        updateResults();
     }
 
 
@@ -239,5 +265,13 @@ public class ConnectionActivity extends AppCompatActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setTripDateTime(Calendar cal) {
+        tripDateTime = cal;
+    }
+
+    public Calendar getTripDateTime() {
+        return tripDateTime;
     }
 }

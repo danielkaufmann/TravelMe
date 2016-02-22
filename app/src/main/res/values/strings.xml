@@ -14,4 +14,8 @@
     <string name="main_hint_delFavorite">Lösche diesen Favoriten</string>
     <string name="main_favorites">Favoriten</string>
     <string name="main_noFavorites">Keine Favoriten gespeichert</string>
+
+    <string name="daniel_mail"><a href="danielkaufman@outlook.com?Subject=MAS_SE2014%Mobile%Apps" target="_top">danielkaufmann@outlook.com</a></string>
+    <string name="marco_mail"><a href="marco.loher@gmail.com?Subject=MAS_SE2014%Mobile%Apps" target="_top">marco.loher@gmail.com</a></string>
+
 </resources>
