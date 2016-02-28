@@ -3,7 +3,6 @@ package com.example.daniel.travelme.helper;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import ch.schoeb.opendatatransport.model.Connection;
@@ -16,37 +15,21 @@ public class SearchItem {
     final private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
     public String from = "";
     public String to = "";
-    private Calendar cal;
     public int actualPage = 0;
-    public Boolean isArrival = false;
+    public Boolean isArrivalTime = false;
     public ArrayList<Connection> connections = new ArrayList<>();
-    private Date dateTime = new Date();
+    public Date dateTime = new Date();
 
     public SearchItem(String from, String to) {
         this.from = from;
         this.to = to;
     }
-    public SearchItem(String from, String to, Calendar cal) {
-        this.from = from;
-        this.to = to;
-        this.cal = cal;
-        dateTime = cal.getTime();
-        System.out.println("**********************");
-        System.out.println(dateTime.toString());
-    }
-    public String getDate() {
+
+    public String getDateString() {
         return dateFormat.format(dateTime);
     }
 
-    public String getTime() {
+    public String getTimeString() {
         return timeFormat.format(dateTime);
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public String getTo() {
-        return to;
     }
 }

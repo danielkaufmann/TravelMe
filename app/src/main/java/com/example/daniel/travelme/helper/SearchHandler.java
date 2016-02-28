@@ -2,8 +2,6 @@ package com.example.daniel.travelme.helper;
 
 import android.os.AsyncTask;
 
-import java.util.Calendar;
-
 import ch.schoeb.opendatatransport.IOpenTransportRepository;
 import ch.schoeb.opendatatransport.OpenTransportRepositoryFactory;
 import ch.schoeb.opendatatransport.model.ConnectionList;
@@ -17,11 +15,7 @@ public class SearchHandler {
     private Boolean isWorkerFinished = false;
 
     public SearchHandler(String from, String to) {
-        item = new SearchItem(from, to) {
-        };
-    }
-    public SearchHandler(String from, String to, Calendar cal) {
-        item = new SearchItem(from, to, cal);
+        item = new SearchItem(from, to);
     }
 
     public void startSearch(SearchCallback callback) {
@@ -65,7 +59,7 @@ public class SearchHandler {
         protected Void doInBackground(Void... arg0) {
             try {
                 IOpenTransportRepository repo = OpenTransportRepositoryFactory.CreateOnlineOpenTransportRepository();
-                ConnectionList clist = repo.searchConnections(item.from, item.to, null, item.getDate(), item.getTime(), item.isArrival, item.actualPage);
+                ConnectionList clist = repo.searchConnections(item.from, item.to, null, item.getDateString(), item.getTimeString(), item.isArrivalTime, item.actualPage);
                 item.connections.clear();
                 item.connections.addAll(clist.getConnections());
                 if (item.connections.size() > 0) {

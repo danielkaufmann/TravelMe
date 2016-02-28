@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/action_AboutScreen"
         android:src="@android:drawable/ic_dialog_info"
-        android:title="@string/about"
-        app:showAsAction="never" />
+        android:title="@string/about" />
 
 </menu>

@@ -7,7 +7,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TIME"
-        android:onClick="showTimePickerDialog" />
+        android:onClick="@string/hello_blank_fragment"
+        android:text="TIME" />
     
 </FrameLayout>

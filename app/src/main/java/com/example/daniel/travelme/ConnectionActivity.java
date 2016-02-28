@@ -19,13 +19,10 @@ import com.example.daniel.travelme.helper.FavoriteItems;
 import com.example.daniel.travelme.helper.SearchCallback;
 import com.example.daniel.travelme.helper.SearchHandler;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 
 public class ConnectionActivity extends AppCompatActivity{
-    private Calendar tripDateTime = Calendar.getInstance();
-    private boolean isStartTime = true;
     private SearchHandler searchSettings;
 
     @Override
@@ -48,6 +45,7 @@ public class ConnectionActivity extends AppCompatActivity{
         buttonChange();
         buttonDate();
         buttonTime();
+        buttonIsArrivalTime();
         buttonFavorite();
         buttonSearchNext();
         buttonSearchPrevious();
@@ -190,58 +188,62 @@ public class ConnectionActivity extends AppCompatActivity{
 
     private void buttonDate() {
         Button button = (Button) findViewById(R.id.btnDate);
-        DialogFragment newFragment = new DatePickerFrag();
+
+        button.setText(searchSettings.getSettings().getDateString());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFrag();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
+
+                DialogFragment frag = new DatePickerFrag();
+                frag.show(getSupportFragmentManager(), "datePicker");
+                updateResults();
             }
         });
-        System.out.println("before new");
-        System.out.println(tripDateTime.getTime());
 
-        SimpleDateFormat formattedDate = new SimpleDateFormat("MM-DD");
-        formattedDate.setCalendar(tripDateTime);
-        String formattedDateString = formattedDate.format(tripDateTime.getTime()).toString();
-        button.setText(formattedDateString);
-
-        System.out.println("before new");
-        searchSettings = new SearchHandler(searchSettings.getSettings().getFrom(), searchSettings.getSettings().getTo(), tripDateTime);
-        System.out.println("after new");
-
-        updateResults();
     }
-
 
     private void buttonTime() {
         Button button = (Button) findViewById(R.id.btnTime);
+        button.setText(searchSettings.getSettings().getTimeString());
 
-        SimpleDateFormat formattedTime = new SimpleDateFormat("hh:mm");
-        formattedTime.setCalendar(tripDateTime);
-        String formattedDateString = formattedTime.toString();
-
-        String textPreTime;
-        if (isStartTime) {
-            textPreTime = getResources().getString(R.string.connection_time_startplace);
-        } else {
-            textPreTime = getResources().getString(R.string.connection_time_targetplace);
-        }
-        button.setText(textPreTime + " " + formattedTime);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new TimePickerFrag();
-                newFragment.show(getSupportFragmentManager(), "timePicker");
+                DialogFragment frag = new TimePickerFrag();
+                frag.show(getSupportFragmentManager(), "timePicker");
+                updateResults();
             }
         });
-        formattedDateString = formattedTime.format(tripDateTime.getTime()).toString();
+    }
 
-        button.setText(formattedDateString);
-        System.out.println(formattedDateString);
-        searchSettings = new SearchHandler(searchSettings.getSettings().getFrom(), searchSettings.getSettings().getTo(), tripDateTime);
-        updateResults();
+    private void buttonIsArrivalTime() {
+        Button button = (Button) findViewById(R.id.btnIsArrivalTime);
+
+        String textPreTime;
+        if (searchSettings.getSettings().isArrivalTime) {
+            textPreTime = getResources().getString(R.string.connection_time_targetplace);
+        } else {
+            textPreTime = getResources().getString(R.string.connection_time_startplace);
+        }
+        button.setText(textPreTime);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchSettings.getSettings().isArrivalTime = !searchSettings.getSettings().isArrivalTime;
+                updateResults();
+
+                Button button = (Button) findViewById(R.id.btnIsArrivalTime);
+                String textPreTime;
+                if (searchSettings.getSettings().isArrivalTime) {
+                    textPreTime = getResources().getString(R.string.connection_time_targetplace);
+                } else {
+                    textPreTime = getResources().getString(R.string.connection_time_startplace);
+                }
+                button.setText(textPreTime);
+            }
+        });
     }
 
 
@@ -265,11 +267,19 @@ public class ConnectionActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public Calendar getTripDateTime() {
-        return tripDateTime;
+    public Date getTripDateTime() {
+        return searchSettings.getSettings().dateTime;
     }
 
-    public void setTripDateTime(Calendar cal) {
-        tripDateTime = cal;
+    public void setTripDateTime(Date trip) {
+
+        searchSettings.getSettings().dateTime = trip;
+
+        // update Button anzeige
+        this.buttonDate();
+        this.buttonTime();
+
+        // Suche neustarten
+        updateResults();
     }
 }
