@@ -183,10 +183,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // // TODO: 18.02.2016 menu actions hinzufügen (about-screen)
         switch (item.getItemId()) {
             case R.id.action_AboutScreen:
-                //startActivity(new Intent(this, SecondActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
 

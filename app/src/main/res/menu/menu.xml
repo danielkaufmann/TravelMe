@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_AboutScreen"
+        android:src="@android:drawable/ic_dialog_info"
         android:title="@string/about"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
 </menu>

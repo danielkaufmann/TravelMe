@@ -1,7 +1,9 @@
 package com.example.daniel.travelme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 
 import com.example.daniel.travelme.helper.ConnectionItemAdapter;
 import com.example.daniel.travelme.helper.FavoriteItems;
@@ -21,7 +21,6 @@ import com.example.daniel.travelme.helper.SearchHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class ConnectionActivity extends AppCompatActivity{
@@ -257,21 +256,20 @@ public class ConnectionActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // // TODO: 18.02.2016 menu actions hinzufügen
         switch (item.getItemId()) {
             case R.id.action_AboutScreen:
-                //startActivity(new Intent(this, SecondActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void setTripDateTime(Calendar cal) {
-        tripDateTime = cal;
-    }
-
     public Calendar getTripDateTime() {
         return tripDateTime;
+    }
+
+    public void setTripDateTime(Calendar cal) {
+        tripDateTime = cal;
     }
 }
